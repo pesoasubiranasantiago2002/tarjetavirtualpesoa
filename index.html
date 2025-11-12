@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingresar PIN</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        /* --- 1. Reseteo y Variables --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-bg: #111; /* Un fondo más oscuro para el login */
+            --color-primary-green: #DFFF00;
+            --color-text-primary: #FFFFFF;
+            --color-text-secondary: #8E8E8E;
+            --color-surface-dark: #2C2C2C;
+            --font-main: 'Manrope', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--color-bg);
+            color: var(--color-text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* --- 2. Contenedor del PIN --- */
+        .pin-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            width: 100%;
+            max-width: 420px; /* Simula el ancho del app */
+            padding: 4rem 2rem;
+        }
+        
+        /* --- 3. Parte Superior (Icono, Título, Puntos) --- */
+        .pin-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .lock-icon {
+            font-size: 1.5rem;
+            color: var(--color-text-secondary);
+            padding: 1rem;
+            border: 2px solid var(--color-surface-dark);
+            border-radius: 50%;
+        }
+
+        .pin-header h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .pin-display {
+            display: flex;
+            gap: 1.5rem; /* Espacio entre los círculos */
+        }
+
+        .pin-dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            border: 2px solid var(--color-primary-green);
+            transition: background-color 0.2s ease;
+        }
+        
+        /* Clase que se añade con JavaScript */
+        .pin-dot.filled {
+            background-color: var(--color-primary-green);
+        }
+        
+        /* Clase para animación de error */
+        .pin-display.error {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+
+        /* --- 4. Teclado Numérico --- */
+        .keypad {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            width: 100%;
+            max-width: 300px; /* Ancho del teclado */
+        }
+
+        .key-btn {
+            background: none;
+            border: none;
+            color: var(--color-text-primary);
+            font-size: 2rem;
+            font-weight: 600;
+            font-family: var(--font-main);
+            padding: 1.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .key-btn:active {
+            background-color: var(--color-surface-dark);
+        }
+
+        /* Posicionamiento del 0, huella y borrar */
+        .key-btn.fingerprint {
+            grid-column: 1 / 2;
+            font-size: 2rem;
+            color: var(--color-text-secondary);
+        }
+        .key-btn.zero {
+            grid-column: 2 / 3;
+        }
+        .key-btn.backspace {
+            grid-column: 3 / 4;
+            font-size: 1.5rem; /* Icono más pequeño */
+            color: var(--color-text-secondary);
+        }
+
+        /* --- 5. Enlace "Olvidé mi pin" --- */
+        .forgot-link {
+            color: var(--color-primary-green);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+        
+        /* --- 6. Media Query (Opcional, para que se vea bien en PC) --- */
+        @media (min-width: 600px) {
+            .pin-container {
+                border-radius: 24px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+                height: 80vh;
+                min-height: 700px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="pin-container">
+
+        <div class="pin-header">
+            <i class="fa-solid fa-lock lock-icon"></i>
+            <h2>Ingresa tu pin de seguridad</h2>
+            <div class="pin-display" id="pinDisplay">
+                <span class="pin-dot"></span>
+                <span class="pin-dot"></span>
+                <span class="pin-dot"></span>
+                <span class="pin-dot"></span>
+            </div>
+        </div>
+
+        <div class="keypad" id="keypad">
+            <button class="key-btn" data-key="1">1</button>
+            <button class="key-btn" data-key="2">2</button>
+            <button class="key-btn" data-key="3">3</button>
+            <button class="key-btn" data-key="4">4</button>
+            <button class="key-btn" data-key="5">5</button>
+            <button class="key-btn" data-key="6">6</button>
+            <button class="key-btn" data-key="7">7</button>
+            <button class="key-btn" data-key="8">8</button>
+            <button class="key-btn" data-key="9">9</button>
+            <button class="key-btn fingerprint" id="fingerprintBtn">
+                <i class="fa-solid fa-fingerprint"></i>
+            </button>
+            <button class="key-btn zero" data-key="0">0</button>
+            <button class="key-btn backspace" id="backspaceBtn">
+                <i class="fa-solid fa-delete-left"></i>
+            </button>
+        </div>
+
+        <a href="#" class="forgot-link">Olvidé mi pin</a>
+
+    </div> <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const pinDisplay = document.getElementById('pinDisplay');
+            const pinDots = pinDisplay.querySelectorAll('.pin-dot');
+            const keypad = document.getElementById('keypad');
+            const backspaceBtn = document.getElementById('backspaceBtn');
+
+            const correctPin = "1234";
+            const maxPinLength = 4;
+            let enteredPin = "";
+
+            // Función para manejar clics en el teclado
+            keypad.addEventListener('click', (event) => {
+                const target = event.target;
+                
+                // Solo reacciona si se presionó un botón con 'data-key'
+                if (target.classList.contains('key-btn') && target.dataset.key) {
+                    if (enteredPin.length < maxPinLength) {
+                        enteredPin += target.dataset.key;
+                        updatePinDisplay();
+                    }
+                    
+                    if (enteredPin.length === maxPinLength) {
+                        checkPin();
+                    }
+                }
+            });
+
+            // Función para el botón de borrar
+            backspaceBtn.addEventListener('click', () => {
+                if (enteredPin.length > 0) {
+                    enteredPin = enteredPin.slice(0, -1); // Borra el último dígito
+                    updatePinDisplay();
+                }
+            });
+
+            // Función para actualizar los círculos del PIN
+            function updatePinDisplay() {
+                // Quita la animación de error si la tiene
+                pinDisplay.classList.remove('error');
+                
+                for (let i = 0; i < maxPinLength; i++) {
+                    if (i < enteredPin.length) {
+                        pinDots[i].classList.add('filled');
+                    } else {
+                        pinDots[i].classList.remove('filled');
+                    }
+                }
+            }
+
+            // Función para verificar el PIN
+            function checkPin() {
+                if (enteredPin === correctPin) {
+                    // ¡Correcto! Redirige a la página principal
+                    // alert('¡Acceso concedido!'); // Opcional
+                    window.location.href = 'primera.html'; // Redirige a tu app
+                } else {
+                    // ¡Incorrecto! Muestra un error
+                    pinDisplay.classList.add('error');
+                    // alert('PIN incorrecto'); // Opcional
+                    
+                    // Resetea el PIN después de la animación de error
+                    setTimeout(() => {
+                        enteredPin = "";
+                        updatePinDisplay();
+                    }, 500); // 500ms (dura la animación)
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transacciones de Tarjeta</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        /* --- 1. Reseteo y Variables Globales --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-bg: #1A1A1A;
+            --color-primary-green: #DFFF00;
+            --color-text-primary: #FFFFFF;
+            --color-text-secondary: #8E8E8E;
+            --color-surface-dark: #2C2C2C;
+            --color-surface-light: #4A4A4A;
+            --font-main: 'Manrope', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: #111;
+            color: var(--color-text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        /* --- 2. Contenedor de la App --- */
+        .app-container {
+            width: 100%; 
+            min-height: 100vh; 
+            background-color: var(--color-bg);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* --- 3. Cabecera de Página --- */
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-weight: 700;
+        }
+
+        .back-link {
+            color: var(--color-text-primary);
+            text-decoration: none;
+            font-size: 1.5rem;
+        }
+
+        .page-header h1 {
+            font-size: 1.25rem;
+        }
+
+        /* --- 4. Barra de Búsqueda --- */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background-color: var(--color-surface-dark);
+            padding: 0.9rem 1.2rem;
+            border-radius: 12px;
+        }
+        
+        .search-bar i {
+            color: var(--color-text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .search-bar input {
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--color-text-primary);
+            font-family: var(--font-main);
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+        }
+
+        .search-bar input::placeholder {
+            color: var(--color-text-secondary);
+            font-weight: 600;
+        }
+        
+        /* --- 5. Lista de Transacciones Agrupadas --- */
+        .transactions-list-grouped {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem; /* Espacio entre cada grupo de fecha */
+        }
+        
+        .date-group-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .date-group-header span:first-child {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-text-secondary);
+        }
+        
+        .date-group-header span:last-child {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-text-primary);
+        }
+
+        .transaction-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .transaction-icon {
+            width: 45px;
+            height: 45px;
+            background-color: var(--color-surface-light);
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 1.2rem;
+            color: var(--color-text-primary);
+            flex-shrink: 0;
+        }
+
+        .transaction-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            overflow: hidden;
+        }
+
+        .transaction-name {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--color-text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .transaction-date {
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+        }
+
+        .transaction-status {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.2rem;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .transaction-amount {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--color-text-primary);
+        }
+
+        .transaction-state {
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .transaction-state.completed {
+            color: #28a745; /* Verde para "Completada" */
+        }
+
+        /* --- 6. Media Query para Escritorio --- */
+        @media (min-width: 600px) {
+            .app-container {
+                max-width: 420px; 
+                margin: 2rem auto; 
+                border-radius: 24px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+                min-height: auto; 
+                position: relative; 
+                overflow: hidden; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+
+        <header class="page-header">
+            <a href="tarjetadedebito.html" class="back-link">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <h1>Transacciones de tarjeta</h1>
+        </header>
+
+        <section class="search-bar">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" placeholder="Buscar transacciones">
+        </section>
+
+        <section class="transactions-list-grouped">
+            
+            <div class="date-group">
+                <div class="date-group-header">
+                    <span>01 noviembre</span>
+                    <span>-$7.98</span>
+                </div>
+                <div class="transaction-item">
+                    <div class="transaction-icon"></div> <div class="transaction-details">
+                        <span class="transaction-name">FACEBK *7RW82AVQH2</span>
+                        <span class="transaction-date">11:52 a. m.</span>
+                    </div>
+                    <div class="transaction-status">
+                        <span class="transaction-amount">-$7.98</span>
+                        <span class="transaction-state completed">Completada</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="date-group">
+                <div class="date-group-header">
+                    <span>31 octubre</span>
+                    <span>-$18.98</span>
+                </div>
+                <div class="transaction-item">
+                    <div class="transaction-icon"></div> <div class="transaction-details">
+                        <span class="transaction-name">FACEBK *878LB5ZQH2</span>
+                        <span class="transaction-date">01:22 p. m.</span>
+                    </div>
+                    <div class="transaction-status">
+                        <span class="transaction-amount">-$18.98</span>
+                        <span class="transaction-state completed">Completada</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="date-group">
+                <div class="date-group-header">
+                    <span>30 octubre</span>
+                    <span>-$64.93</span>
+                </div>
+                <div class="transaction-item">
+                    <div class="transaction-icon"></div> <div class="transaction-details">
+                        <span class="transaction-name">FACEBK *T6JCH69RH2</span>
+                        <span class="transaction-date">10:51 a. m.</span>
+                    </div>
+                    <div class="transaction-status">
+                        <span class="transaction-amount">-$64.93</span>
+                        <span class="transaction-state completed">Completada</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="date-group">
+                <div class="date-group-header">
+                    <span>25 octubre</span>
+                    <span>-$58.89</span>
+                </div>
+                <div class="transaction-item">
+                    <div class="transaction-icon"></div> <div class="transaction-details">
+                        <span class="transaction-name">FACEBK *XCRT85DRH2</span>
+                        <span class="transaction-date">11:53 a. m.</span>
+                    </div>
+                    <div class="transaction-status">
+                        <span class="transaction-amount">-$58.89</span>
+                        <span class="transaction-state completed">Completada</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="date-group">
+                <div class="date-group-header">
+                    <span>22 octubre</span>
+                    <span>-$58.60</span>
+                </div>
+                <div class="transaction-item">
+                    <div class="transaction-icon"></div> <div class="transaction-details">
+                        <span class="transaction-name">FACEBK *TAMWW45RH2</span>
+                        <span class="transaction-date">11:41 p. m.</span>
+                    </div>
+                    <div class="transaction-status">
+                        <span class="transaction-amount">-$58.60</span>
+                        <span class="transaction-state completed">Completada</span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </div> </body>
+</html>

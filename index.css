@@ -1,0 +1,393 @@
+/* --- 1. Reseteo y Variables Globales --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-bg: #1A1A1A; /* Fondo principal */
+    --color-primary-green: #DFFF00; /* Verde neón (tu color principal) */
+    --color-text-primary: #FFFFFF; /* Texto blanco */
+    --color-text-secondary: #8E8E8E; /* Texto gris */
+    --color-surface-dark: #2C2C2C; /* Fondo de tarjetas oscuras */
+    --color-surface-light: #4A4A4A; /* Fondo de íconos */
+    --font-main: 'Manrope', sans-serif;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: #111; /* Color de fondo para el *escritorio* */
+    color: var(--color-text-primary);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+/* --- 2. Contenedor de la App --- */
+.app-container {
+    width: 100%; /* Ocupa todo en móvil */
+    min-height: 100vh; /* Ocupa toda la altura en móvil */
+    background-color: var(--color-bg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Espacio entre todos los elementos */
+}
+
+/* --- 3. Cabecera --- */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    background-color: var(--color-surface-light);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+}
+
+.header-icons {
+    display: flex;
+    gap: 1.2rem;
+    font-size: 1.4rem;
+    color: var(--color-text-secondary);
+}
+
+/* --- 4. Sección de Balance --- */
+.balance-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-surface-dark);
+    padding: 1.5rem;
+    border-radius: 16px;
+}
+
+.balance-amount {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 0.25rem;
+}
+
+.balance-details {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-text-secondary);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.audit-btn {
+    background-color: var(--color-primary-green);
+    color: #000;
+    border: none;
+    border-radius: 20px;
+    padding: 0.25rem 0.75rem;
+    font-weight: 700;
+    font-family: var(--font-main);
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.crypto-icon {
+    color: var(--color-primary-green); /* Simulación de color */
+    font-size: 1.2rem;
+}
+
+.balance-right {
+    text-align: right;
+}
+
+.balance-label {
+    color: var(--color-text-secondary);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* --- 5. Botones de Acción --- */
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn {
+    flex: 1; /* Hace que ambos botones ocupen el 50% */
+    padding: 1.2rem;
+    border-radius: 14px;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-family: var(--font-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    cursor: pointer;
+}
+
+.btn-deposit {
+    background-color: var(--color-primary-green);
+    color: #000;
+}
+
+.btn-withdraw {
+    background-color: var(--color-surface-dark);
+    color: var(--color-text-primary);
+}
+
+/* --- 6. Cuentas Bancarias --- */
+.account-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.account-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: var(--color-surface-dark);
+    color: var(--color-text-primary);
+    padding: 1.2rem 1.5rem;
+    border-radius: 14px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+}
+.account-link .fa-flag-usa { color: #E03C31; } /* Color bandera USA */
+.account-link .fa-earth-europe { color: #003399; } /* Color bandera UE */
+
+/* --- 7. Navegación Principal --- */
+.main-nav {
+    display: flex;
+    justify-content: space-around; /* Distribuye los items */
+    gap: 0.5rem;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--color-text-secondary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    width: 65px; /* Ancho fijo para controlar el texto */
+    text-align: center;
+}
+
+.nav-icon {
+    width: 60px;
+    height: 60px;
+    background-color: var(--color-surface-light);
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    font-size: 1.5rem;
+    color: var(--color-text-primary);
+    transition: background-color 0.2s ease;
+}
+
+.nav-item:hover .nav-icon {
+    background-color: var(--color-primary-green);
+    color: #000;
+}
+
+/* --- 8. SECCIÓN DE TRANSACCIONES (Corregido) --- */
+.transactions-section {
+    margin-top: 1rem; 
+}
+
+.transactions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem; 
+}
+
+.transactions-header h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.transactions-header .view-all {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-primary-green); /* Verde "Ver todas" */
+    text-decoration: none;
+}
+
+.transactions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Más espacio entre items */
+}
+
+.transaction-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.transaction-icon {
+    width: 45px;
+    height: 45px;
+    background-color: var(--color-surface-light); 
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 1.2rem;
+    color: var(--color-text-primary);
+    flex-shrink: 0; /* Evita que el ícono se encoja */
+    position: relative; /* Para la bandera */
+}
+
+/* Estilo para el ícono de Meta/Facebook */
+.transaction-icon.logo {
+    background-color: #fff; /* Fondo blanco */
+    color: #0078FF; /* Azul de Meta */
+    font-size: 1.5rem;
+}
+
+/* Estilo para el ícono de QR con bandera */
+.transaction-icon.qr {
+    background-color: var(--color-surface-dark); /* Fondo oscuro */
+}
+.transaction-icon .flag-icon {
+    position: absolute;
+    font-size: 0.8rem;
+    bottom: -5px;
+    right: -5px;
+    border: 2px solid var(--color-bg); /* Borde para separar */
+    border-radius: 50%;
+    line-height: 1; /* Asegura que el emoji se vea bien */
+}
+
+.transaction-details {
+    flex: 1; /* Ocupa el espacio del medio */
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    overflow: hidden; /* Evita que el texto largo rompa el diseño */
+}
+
+.transaction-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--color-text-primary);
+    white-space: nowrap; /* Evita que el texto salte de línea */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Añade "..." si es muy largo */
+}
+
+.transaction-date {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+}
+
+.transaction-status {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Alinea texto a la derecha */
+    gap: 0.2rem;
+    text-align: right;
+    flex-shrink: 0; /* Evita que se encoja */
+}
+
+.transaction-amount {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-text-primary); /* Color por defecto */
+}
+
+.transaction-amount.positive {
+    color: var(--color-primary-green); /* Verde para ingresos */
+}
+
+.transaction-amount.negative {
+    color: var(--color-text-primary); /* Blanco para gastos */
+}
+
+.transaction-state {
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.transaction-state.completed {
+    color: #28a745; /* Verde para "Completada" */
+}
+
+.transaction-state.refunded {
+    color: #dc3545; /* Rojo para "Reembolsado" */
+}
+
+/* --- 9. Botón Flotante QR --- */
+.qr-pay-btn {
+    background-color: #222;
+    color: var(--color-text-primary);
+    border: 2px solid var(--color-surface-light);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: var(--font-main);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    
+    /* Posicionamiento Fijo */
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+}
+
+/* --- 10. Footer y Espaciado --- */
+.app-footer {
+    color: var(--color-text-secondary);
+    padding-bottom: 6rem; /* MUY IMPORTANTE: Deja espacio para que el botón QR no tape el contenido */
+}
+
+/* --- 11. MEDIA QUERY PARA ESCRITORIO --- */
+/* Esto se aplica solo en pantallas de más de 600px (tablets, desktops) */
+@media (min-width: 600px) {
+    .app-container {
+        /* Se convierte en una "tarjeta" en el centro */
+        max-width: 420px; /* Ancho de un celular grande */
+        margin: 2rem auto; /* Centra horizontalmente */
+        border-radius: 24px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        min-height: auto; /* Ya no necesita ocupar toda la pantalla */
+        position: relative; /* Para que el botón fijo se base en él */
+        overflow: hidden; /* Oculta si algo se sale */
+    }
+
+    .qr-pay-btn {
+        /* En escritorio, lo hacemos 'absolute' al contenedor */
+        position: absolute;
+        transform: translateX(-50%);
+        /* Se alinea con el padding del contenedor */
+        bottom: 1.5rem;
+    }
+}
