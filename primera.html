@@ -31,17 +31,17 @@
 
         <section class="balance-section">
             <div class="balance-left">
-                <div class="balance-amount">$0.0602251</div>
+                <div class="balance-amount">$0.00000</div>
                 <div class="balance-details">
                     <span>Balance en USD</span>
                     <button class="audit-btn">Auditar</button>
                     <i class="fa-solid fa-circle-dollar-to-slot crypto-icon"></i>
                 </div>
             </div>
-            <div class="balance-right">
+            <!-- <div class="balance-right">
                 <div class="balance-amount">$0.000</div>
                 <span class="balance-label">Balance in...</span>
-            </div>
+            </div> -->
         </section>
 
         <section class="action-buttons">
@@ -89,55 +89,59 @@
             </a>
         </nav>
         
-        <section class="transactions-section">
-            <div class="transactions-header">
-                <h2>Últimas transacciones</h2>
-                <a href="transacciones.html" class="view-all">Ver todas</a>
-            </div>
-
-            <div class="transactions-list">
-                <div class="transactions-list">
-                <div class="transaction-item">
-                    <div class="transaction-icon logo">
-                        <i class="fa-brands fa-meta"></i> </div>
-                    <div class="transaction-details">
-                        <span class="transaction-name">Visa 2610 - FACEBK *ZBJGL...</span>
-                        <span class="transaction-date">11 nov 2025 10:31 p. m.</span>
-                    </div>
-                    <div class="transaction-status">
-                        <span class="transaction-amount negative">-$71.85</span>
-                        <span class="transaction-state completed">Completada</span>
-                    </div>
+        <section class="transactions-list-grouped">
+            
+            <div class="date-group">
+                <div class="date-group-header">
+                    <span>16 noviembre</span>
+                    <!-- <span>-$109.31</span> -->
                 </div>
-
                 <div class="transaction-item">
-                    <div class="transaction-icon qr">
-                        <i class="fa-solid fa-qrcode"></i>
-                        <span class="flag-icon">🇧🇴</span> </div>
-                    <div class="transaction-details">
-                        <span class="transaction-name">Pago de QR</span>
-                        <span class="transaction-date">11 nov 2025 11:05 a. m.</span>
+                    <div class="transaction-icon"></div> <div class="transaction-details">
+                        <span class="transaction-name">FACEBK *F3ZEQ79RH2</span>
+                        <span class="transaction-date">17:15 a. m.</span>
                     </div>
                     <div class="transaction-status">
-                        <span class="transaction-amount">$49.53</span>
-                        <span class="transaction-state refunded">Reembolsado</span>
-                    </div>
-                </div>
-
-                <div class="transaction-item">
-                    <div class="transaction-icon">
-                        <i class="fa-solid fa-credit-card"></i>
-                    </div>
-                    <div class="transaction-details">
-                        <span class="transaction-name">Retiro desde tarjeta</span>
-                        <span class="transaction-date">11 nov 2025 11:01 a. m.</span>
-                    </div>
-                    <div class="transaction-status">
-                        <span class="transaction-amount positive">+$49.50</span>
+                        <span class="transaction-amount">-$109.31</span>
                         <span class="transaction-state completed">Completada</span>
                     </div>
                 </div>
             </div>
+            
+            <div class="date-group">
+                <div class="date-group-header">
+                    <span>14 noviembre</span>
+                    <!-- <span>-$147.06</span> -->
+                </div>
+                <div class="transaction-item">
+                    <div class="transaction-icon"></div> <div class="transaction-details">
+                        <span class="transaction-name">FACEBK *CKVBZ6RRH2</span>
+                        <span class="transaction-date">11:52 a. m.</span>
+                    </div>
+                    <div class="transaction-status">
+                        <span class="transaction-amount">-$147.06</span>
+                        <span class="transaction-state completed">Completada</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="date-group">
+                <div class="date-group-header">
+                    <span>12 noviembre</span>
+                    <!-- <span>-$147.06</span> -->
+                </div>
+                <div class="transaction-item">
+                    <div class="transaction-icon"></div> <div class="transaction-details">
+                        <span class="transaction-name">FACEBK *ZBJGL79RH2</span>
+                        <span class="transaction-date">09:15 a. m.</span>
+                    </div>
+                    <div class="transaction-status">
+                        <span class="transaction-amount">-$147.06</span>
+                        <span class="transaction-state completed">Completada</span>
+                    </div>
+                </div>
+            </div>
+
         </section>
 
         <button class="qr-pay-btn">
